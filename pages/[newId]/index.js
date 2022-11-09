@@ -6,14 +6,10 @@ import Head from 'next/head';
 const index = (props) => {
   return (
     <>
-     <Head>
-        <title>{props.meetupdata.title}</title>
-        <meta name='description' content={props.meetupdata.description} />
-      </Head>
+
     
     <MeetupDetail
     image={props.meetupdata.image}
-    title={props.meetupdata.title}
     address={props.meetupdata.address}
     description={props.meetupdata.description}
   />
@@ -63,7 +59,6 @@ export const getStaticProps=async (context)=>{
     
     const db=client.db();
     const meetupCollection=db.collection('adib');
-    console.log(meetupCollection);
     const selectedMeetup = await meetupCollection.findOne({
       _id: ObjectId(meetupid),
     });
@@ -74,7 +69,6 @@ export const getStaticProps=async (context)=>{
     props:{
       meetupdata:{
         id: selectedMeetup._id.toString(),
-        title: selectedMeetup.title,
         address: selectedMeetup.address,
         image: selectedMeetup.image,
         description: selectedMeetup.description,
