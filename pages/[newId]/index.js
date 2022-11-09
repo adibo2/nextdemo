@@ -6,10 +6,14 @@ import Head from 'next/head';
 const index = (props) => {
   return (
     <>
-
+     <Head>
+        <title>{props.meetupdata.title}</title>
+        <meta name='description' content={props.meetupdata.description} />
+      </Head>
     
     <MeetupDetail
     image={props.meetupdata.image}
+    title={props.meetupdata.title}
     address={props.meetupdata.address}
     description={props.meetupdata.description}
   />
@@ -29,7 +33,7 @@ export const getStaticPaths=async ()=>{
     client.close();
 
   return{
-    fallback:true,
+    fallback:false,
     //if false set a error 404 in the missing path
     paths:meetups.map((meetup)=>({
       params:{newId:meetup._id.toString()}
@@ -69,6 +73,7 @@ export const getStaticProps=async (context)=>{
     props:{
       meetupdata:{
         id: selectedMeetup._id.toString(),
+        title: selectedMeetup.title,
         address: selectedMeetup.address,
         image: selectedMeetup.image,
         description: selectedMeetup.description,
